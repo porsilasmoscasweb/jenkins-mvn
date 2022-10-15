@@ -1,0 +1,29 @@
+pipeline {
+    agent any 
+    tools { 
+      maven 'Maven 3.8.6' 
+      jdk 'JDK 18' 
+    }
+    stages {
+        stage('Git Clone') {
+            steps {
+                git 'https://github.com/porsilasmoscasweb/jenkins-mvn.git'
+            }
+        }
+        stage('Maven clean'){
+            steps {
+                sh "mvn clean test"
+            }
+        }
+        stage('Maven build'){
+            steps {
+                sh "mvn compile package"
+            }
+        }
+        stage('Maven deploy'){
+            steps {
+                sh "mvn deploy"
+            }
+        }
+    }
+}
